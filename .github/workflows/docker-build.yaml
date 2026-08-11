@@ -79,7 +79,7 @@ jobs:
           file: Dockerfile
           push: true
           tags: |
-             rodrigorootrjportifolio/flask-desafio-2026-entrevista:${GITHUB_ENV}
+             rodrigorootrjportifolio/flask-desafio-2026-entrevista:${{ env.RELEASE }}
 #            ${{ env.DOCKER_REPO }}/${{ env.DOCKER_PROJETO }}-${{ env.DOCKER_TAG }}:${{ env.RELEASE }}
 #            ${{ env.DOCKER_LATEST == 'true' && format('{0}/flask-desafio-2026:latest', env.DOCKERHUB_USERNAME) || '' }}
           build-args: |
