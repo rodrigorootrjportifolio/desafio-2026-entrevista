@@ -6,6 +6,9 @@ on:
       - prod
       - development
 
+environment:
+  name: ${{ github.ref_name == 'prod' && 'production' || 'development' }}
+
 env:
   ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
   DOCKERHUB_USERNAME_V2: rodrigorootrjportifolio
