@@ -73,7 +73,8 @@ jobs:
           file: ./asset/flask/Dockerfile
           push: true
           tags: |
-            ${{ env.DOCKER_REPO }}/${{ env.DOCKER_PROJETO }}-${{ env.DOCKER_TAG }}:${{ env.RELEASE }}
+             rodrigorootrjportifolio/flask-desafio-2026-entrevista:1.0.1-beta 
+#            ${{ env.DOCKER_REPO }}/${{ env.DOCKER_PROJETO }}-${{ env.DOCKER_TAG }}:${{ env.RELEASE }}
 #            ${{ env.DOCKER_LATEST == 'true' && format('{0}/flask-desafio-2026:latest', env.DOCKERHUB_USERNAME) || '' }}
           build-args: |
             CODE_ENV=${{ env.ENV_NAME }}
