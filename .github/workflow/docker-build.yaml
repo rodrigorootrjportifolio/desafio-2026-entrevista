@@ -10,6 +10,10 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     steps:
+      - name: Check if variable is NOT empty
+        if: ${{ env.DOCKERHUB_USERNAME != '' }}
+        run: echo "The environment variable has content."
+
       - name: Checkout Code
         uses: actions/checkout@v4
 
@@ -39,7 +43,7 @@ jobs:
           file: ./asset/flask/Dockerfile
           push: true
           tags: |
-            your-dockerhub-username/my-app:${{ env.DOCKER_TAG }}
+            rodrigorootrjportifolio/flask-desafio-2026:${{ env.DOCKER_TAG }}
           build-args: |
             CODE_ENV=${{ env.ENV_NAME }}
             FLASK_LOCAL_CACHE_DEFAULT_TIMEOUT=${{ env.FLASK_LOCAL_CACHE_DEFAULT_TIMEOUT }}
