@@ -70,7 +70,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: ./asset/flask/Dockerfile
+          file: Dockerfile
           push: true
           tags: |
              rodrigorootrjportifolio/flask-desafio-2026-entrevista:1.0.1-beta 
