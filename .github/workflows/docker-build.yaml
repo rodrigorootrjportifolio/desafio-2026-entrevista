@@ -73,8 +73,8 @@ jobs:
           file: ./asset/flask/Dockerfile
           push: true
           tags: |
-            ${{ env.DOCKERHUB_USERNAME }}/flask-desafio-2026:${{ env.DOCKER_TAG }}
-            ${{ env.DOCKER_LATEST == 'true' && format('{0}/flask-desafio-2026:latest', env.DOCKERHUB_USERNAME) || '' }}
+            ${{ env.DOCKER_REPO }}/${{ env.DOCKER_PROJETO }}-${{ env.DOCKER_TAG }}:${{ env.RELEASE }}
+#            ${{ env.DOCKER_LATEST == 'true' && format('{0}/flask-desafio-2026:latest', env.DOCKERHUB_USERNAME) || '' }}
           build-args: |
             CODE_ENV=${{ env.ENV_NAME }}
             FLASK_LOCAL_CACHE_DEFAULT_TIMEOUT=${{ env.FLASK_LOCAL_CACHE_DEFAULT_TIMEOUT }}
