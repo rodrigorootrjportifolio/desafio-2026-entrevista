@@ -1,0 +1,8 @@
+version:
+services:
+# prometheus#
+# grafana
+app-flask:
+app-sinatra:
+
+network:
