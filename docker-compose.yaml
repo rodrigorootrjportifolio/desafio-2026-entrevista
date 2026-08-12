@@ -1,7 +1,7 @@
 version:
 services:
-# prometheus#
-# grafana
+prometheus
+grafana
 app-flask:
 app-sinatra:
 

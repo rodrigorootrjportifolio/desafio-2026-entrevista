@@ -18,7 +18,7 @@ jobs:
     name: Check Environment
     runs-on: ubuntu-latest
     environment:
-      name: ${{ github.ref_name == 'prod' && 'production' || 'development' }}
+      name: ${{ github.ref_name == 'prod' && 'production' || 'development' || hml }}
 
     steps:
       - name: Check DockerHub Username
@@ -36,7 +36,7 @@ jobs:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
     environment:
-      name: ${{ github.ref_name == 'prod' && 'production' || 'development' }}
+      name: ${{ github.ref_name == 'prod' && 'production' || 'development' || hml }}
 
     steps:
 
@@ -55,6 +55,12 @@ jobs:
             echo "ENV_NAME=development" >> "$GITHUB_ENV"
             echo "DOCKER_TAG=dev" >> "$GITHUB_ENV"
             echo "DOCKER_LATEST=false" >> "$GITHUB_ENV"
+
+          elif [[ "${GITHUB_REF}" == "refs/heads/hml" ]]; then
+            echo "ENV_NAME=hml" >> "$GITHUB_ENV"
+            echo "DOCKER_TAG=hml" >> "$GITHUB_ENV"
+            echo "DOCKER_LATEST=true" >> "$GITHUB_ENV"
+
           fi
 
       - name: Set Release Version
@@ -74,14 +80,33 @@ jobs:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Set Docker tags
+        id: docker_tags
+        run: |
+          TAGS="${{ vars.DOCKERHUB_USERNAME }}/${{ vars.DOCKER_PROJETO }}-${{ vars.DOCKER_TAG }}:${{ github.ref_name }}"
+          
+          # Adiciona tag latest apenas para prod e hml
+          if [[ "${{ github.ref_name }}" == "prod" ]] || [[ "${{ github.ref_name }}" == "hml" ]]; then
+            TAGS="${TAGS},${{ vars.DOCKERHUB_USERNAME }}/${{ vars.DOCKER_PROJETO }}-${{ vars.DOCKER_TAG }}:latest"
+          fi
+          
+          # Se for uma tag de versão (v1.0.0), também adiciona a tag da versão
+          if [[ "${{ github.ref_type }}" == "tag" ]]; then
+            VERSION_TAG="${{ github.ref_name }}"
+            TAGS="${TAGS},${{ vars.DOCKERHUB_USERNAME }}/${{ vars.DOCKER_PROJETO }}-${{ vars.DOCKER_TAG }}:${VERSION_TAG}"
+          fi
+          
+          echo "TAGS=${TAGS}" >> $GITHUB_ENV
+          echo "Docker tags: ${TAGS}"
+
+
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v6
         with:
           context: .
           file: Dockerfile
           push: true
-          tags: |
-            ${{ vars.DOCKERHUB_USERNAME }}/${{ vars.DOCKER_PROJETO }}-${{ env.DOCKER_TAG }}:${{ env.RELEASE }}
+          tags: ${{ env.TAGS }}
           build-args: |
             CODE_ENV=${{ env.ENV_NAME }}
             FLASK_LOCAL_CACHE_DEFAULT_TIMEOUT=${{ vars.FLASK_LOCAL_CACHE_DEFAULT_TIMEOUT }}

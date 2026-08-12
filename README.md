@@ -1,13 +1,24 @@
 # desafio-2026-entrevista PRINCIPAL
-Desafio 2026, entrevista.
+Desafio Agosto de 2026, entrevista.
+
+Existe, além desta app uma outra no repo:
+    - https://github.com/rodrigorootrjportifolio/desafio-2026-entrevista-ext-sinatra
+github/workflow:
+    - .github/workflows/docker-build.yaml
+registry:
+    - https://hub.docker.com/repository/docker/rodrigorootrjportifolio/flask-desafio-2026-entrevista-dev/general
+    - https://hub.docker.com/repository/docker/rodrigorootrjportifolio/sinatra-desafio-2026-entrevista-dev/general
+
 # Diagrama
+run
 ```sh
-make build-flask
-make shell-flask
+make build
+make run
 ```
 pipeline:
     envroment: development
-- prod
+    variaveis:
+        -  FLASK_LOCAL_CACHE_DEFAULT_TIMEOUT
 - development    
 Pipeline:
 CI
@@ -15,6 +26,7 @@ CI
 ```sh
 /estatico GET
 /timer    GET
+/metrics  GET
 ```
 ##
 Sinatra:
