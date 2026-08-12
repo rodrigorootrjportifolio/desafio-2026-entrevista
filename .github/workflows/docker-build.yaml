@@ -84,4 +84,4 @@ jobs:
 #            ${{ env.DOCKER_LATEST == 'true' && format('{0}/flask-desafio-2026:latest', env.DOCKERHUB_USERNAME) || '' }}
           build-args: |
             CODE_ENV=${{ env.ENV_NAME }}
-            FLASK_LOCAL_CACHE_DEFAULT_TIMEOUT=${{ env.FLASK_LOCAL_CACHE_DEFAULT_TIMEOUT }}
+            FLASK_LOCAL_CACHE_DEFAULT_TIMEOUT=${{ vars.FLASK_LOCAL_CACHE_DEFAULT_TIMEOUT }}
