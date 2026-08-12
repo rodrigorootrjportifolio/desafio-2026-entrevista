@@ -79,9 +79,7 @@ jobs:
           file: Dockerfile
           push: true
           tags: |
-             ${{ secrets.DOCKERHUB_USERNAME }}/flask-desafio-2026-entrevista:${{ env.RELEASE }}
-#            ${{ env.DOCKER_REPO }}/${{ env.DOCKER_PROJETO }}-${{ env.DOCKER_TAG }}:${{ env.RELEASE }}
-#            ${{ env.DOCKER_LATEST == 'true' && format('{0}/flask-desafio-2026:latest', env.DOCKERHUB_USERNAME) || '' }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ vars.DOCKER_PROJETO }}-${{ env.DOCKER_TAG }}:${{ env.RELEASE }}
           build-args: |
             CODE_ENV=${{ env.ENV_NAME }}
             FLASK_LOCAL_CACHE_DEFAULT_TIMEOUT=${{ vars.FLASK_LOCAL_CACHE_DEFAULT_TIMEOUT }}

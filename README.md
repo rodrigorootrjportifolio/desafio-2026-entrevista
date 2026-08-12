@@ -9,4 +9,16 @@ pipeline:
     envroment: development
 - prod
 - development    
+CI
 
+```sh
+/estatico GET
+/timer    GET
+```
+
+## 
+TODO:
+    Kubernetes:
+    spec driven development:
+    policy de retenção de dados
+    SRE de requisições
