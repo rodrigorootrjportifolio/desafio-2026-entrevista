@@ -83,7 +83,7 @@ jobs:
       - name: Set Docker tags
         id: docker_tags
         run: |
-          TAGS="${{ vars.DOCKERHUB_USERNAME }}/${{ vars.DOCKER_PROJETO }}-${{ vars.DOCKER_TAG }}:${{ github.ref_name }}"
+          TAGS="${{ vars.DOCKERHUB_USERNAME }}/${{ vars.DOCKER_PROJETO }}-${{ vars.DOCKER_TAG }}:${{ env.RELEASE }}"
           
           # Adiciona tag latest apenas para prod e hml
           if [[ "${{ github.ref_name }}" == "prod" ]] || [[ "${{ github.ref_name }}" == "hml" ]]; then
