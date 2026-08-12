@@ -5,6 +5,7 @@ on:
     branches:
       - prod
       - development
+      - hml
     tags:
       - 'v*'      
 
