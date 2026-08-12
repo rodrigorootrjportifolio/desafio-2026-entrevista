@@ -3,7 +3,7 @@ REPO=rodrigorootrjportifolio
 PROJETO=flask-desafio-2026-entrevista
 TAG=${REPO}/${PROJETO}:${VERSION}
 DIR=$(shell pwd -P)
-RELEASE=rodrigorootrjportifolio/flask-desafio-2026-entrevista:6a7383a6d971c271ef411c17f555aee720c0fe0f
+RELEASE=rodrigorootrjportifolio/flask-desafio-2026-entrevista-dev:fcab0301d65852ecb470a842a84af4a3d754533e
 ## Flask
 build:
 	@docker build -t ${TAG} .
