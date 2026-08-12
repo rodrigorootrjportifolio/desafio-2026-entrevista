@@ -22,8 +22,9 @@ Sinatra:
 
 ## 
 TODO:
-    Kubernetes:
     spec driven development:
     policy de retenção de dados
     SRE de requisições
     Log Monitoring
+    Sonar
+    Sec
