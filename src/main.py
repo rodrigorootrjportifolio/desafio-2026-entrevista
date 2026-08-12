@@ -1,24 +1,22 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from flask_caching import Cache
 from datetime import datetime
-from flask import Flask, render_template
+from prometheus_flask_exporter import PrometheusMetrics
 import os
 
 app = Flask(__name__)
+LOCAL_CACHE_DEFAULT_TIMEOUT = int(os.getenv("LOCAL_CACHE_DEFAULT_TIMEOUT", 600))
 
 cache = Cache(app, config={
     "CACHE_TYPE": "SimpleCache",
-    "CACHE_DEFAULT_TIMEOUT": os.getenv('LOCAL_CACHE_DEFAULT_TIMEOUT', 600)
+    "CACHE_DEFAULT_TIMEOUT": LOCAL_CACHE_DEFAULT_TIMEOUT 
 })
-
-cache = Cache(app)
-
+## PROM
+metrics = PrometheusMetrics(app)
 
 @app.route("/estatico")
 @cache.cached()
 def estatico():
-    print("Consultando banco...")
-
     return jsonify({
         "users": [
             {"id": 1, "name": "Desafio Devops 2026 - Rodrigo da Silva Cunha"},
@@ -26,11 +24,12 @@ def estatico():
     })
 
 @app.route("/timer")
-@cache.cached()
+@cache.cached(timeout=LOCAL_CACHE_DEFAULT_TIMEOUT)
 def timer():
-    dt = datetime.datetime.now()
-    print(now)
-    return jsonify(now)
+    dt = datetime.now().isoformat()
+    return jsonify({
+        "data":[{"data":dt}]
+        })
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
