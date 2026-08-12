@@ -17,4 +17,8 @@ WORKDIR /app
 COPY --from=compile-image /app/ /app/
 COPY --from=compile-image /asset/ /asset/
 EXPOSE 5000
+ARG FLASK_LOCAL_CACHE_DEFAULT_TIMEOUT
+ARG CODE_ENV
+ENV LOCAL_CACHE_DEFAULT_TIMEOUT=$FLASK_LOCAL_CACHE_DEFAULT_TIMEOUT
+ENV CODE_ENV=$CODE_ENV
 CMD ["/bin/sh","operador.sh"]
