@@ -19,7 +19,7 @@ jobs:
     name: Check Environment
     runs-on: ubuntu-latest
     environment:
-      name: ${{ github.ref_name == 'prod' && 'production' || 'development' || 'hml' }}
+      name: ${{ github.ref_name == 'prod' && 'production' || github.ref_name == 'hml' && 'hml' || github.ref_name == 'development' && 'development' }}
 
     steps:
       - name: Check DockerHub Username
@@ -37,7 +37,7 @@ jobs:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
     environment:
-      name: ${{ github.ref_name == 'prod' && 'production' || 'development' || 'hml' }}
+      name: ${{ github.ref_name == 'prod' && 'production' || github.ref_name == 'hml' && 'hml' || github.ref_name == 'development' && 'development' }}
 
     steps:
 
