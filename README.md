@@ -30,7 +30,7 @@ CI
 /timer    GET
 /metrics  GET
 ```
-##
+## 
 Sinatra:
  - https://github.com/rodrigorootrjportifolio/desafio-2026-entrevista-ext-sinatra
 
