@@ -83,17 +83,17 @@ jobs:
       - name: Set Docker tags
         id: docker_tags
         run: |
-          TAGS="${{ vars.DOCKERHUB_USERNAME }}/${{ vars.DOCKER_PROJETO }}-${{ vars.DOCKER_TAG }}:${{ env.RELEASE }}"
+          TAGS="${{ vars.DOCKERHUB_USERNAME }}/${{ vars.DOCKER_PROJETO }}-${{ env.DOCKER_TAG }}:${{ env.RELEASE }}"
           
           # Adiciona tag latest apenas para prod e hml
           if [[ "${{ github.ref_name }}" == "prod" ]] || [[ "${{ github.ref_name }}" == "hml" ]]; then
-            TAGS="${TAGS},${{ vars.DOCKERHUB_USERNAME }}/${{ vars.DOCKER_PROJETO }}-${{ vars.DOCKER_TAG }}:latest"
+            TAGS="${TAGS},${{ vars.DOCKERHUB_USERNAME }}/${{ vars.DOCKER_PROJETO }}-${{ env.DOCKER_TAG }}:latest"
           fi
           
           # Se for uma tag de versão (v1.0.0), também adiciona a tag da versão
           if [[ "${{ github.ref_type }}" == "tag" ]]; then
             VERSION_TAG="${{ github.ref_name }}"
-            TAGS="${TAGS},${{ vars.DOCKERHUB_USERNAME }}/${{ vars.DOCKER_PROJETO }}-${{ vars.DOCKER_TAG }}:${VERSION_TAG}"
+            TAGS="${TAGS},${{ vars.DOCKERHUB_USERNAME }}/${{ vars.DOCKER_PROJETO }}-${{ env.DOCKER_TAG }}:${VERSION_TAG}"
           fi
           
           echo "TAGS=${TAGS}" >> $GITHUB_ENV
