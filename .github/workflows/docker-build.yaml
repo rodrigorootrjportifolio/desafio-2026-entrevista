@@ -18,7 +18,7 @@ jobs:
     name: Check Environment
     runs-on: ubuntu-latest
     environment:
-      name: ${{ github.ref_name == 'prod' && 'production' || 'development' || 'hml' }}
+      name: ${{ github.ref_name == 'development' && 'development' || github.ref_name == 'hml' && 'hml' || github.ref_name == 'prod' && 'prod' }}
 
     steps:
       - name: Check DockerHub Username
@@ -36,7 +36,7 @@ jobs:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
     environment:
-      name: ${{ github.ref_name == 'prod' && 'production' || 'development' || 'hml' }}
+      name: ${{ github.ref_name == 'development' && 'development' || github.ref_name == 'hml' && 'hml' || github.ref_name == 'prod' && 'prod' }}
 
     steps:
 
@@ -47,8 +47,8 @@ jobs:
         id: env-setup
         run: |
           if [[ "${GITHUB_REF}" == "refs/heads/prod" ]]; then
-            echo "ENV_NAME=production" >> "$GITHUB_ENV"
-            echo "DOCKER_TAG=production" >> "$GITHUB_ENV"
+            echo "ENV_NAME=prod" >> "$GITHUB_ENV"
+            echo "DOCKER_TAG=prod" >> "$GITHUB_ENV"
             echo "DOCKER_LATEST=true" >> "$GITHUB_ENV"
 
           elif [[ "${GITHUB_REF}" == "refs/heads/development" ]]; then
@@ -87,13 +87,13 @@ jobs:
           
           # Adiciona tag latest apenas para prod e hml
           if [[ "${{ github.ref_name }}" == "prod" ]] || [[ "${{ github.ref_name }}" == "hml" ]]; then
-            TAGS="${TAGS},${{ vars.DOCKERHUB_USERNAME }}/${{ vars.DOCKER_PROJETO }}-${{ env.DOCKER_TAG }}:latest"
+            TAGS="${TAGS},${{ vars.DOCKERHUB_USERNAME }}/${{ vars.DOCKER_PROJETO }}-${{ env.DOCKER_TAG }}:${{ env.RELEASE }}"
           fi
           
           # Se for uma tag de versão (v1.0.0), também adiciona a tag da versão
           if [[ "${{ github.ref_type }}" == "tag" ]]; then
             VERSION_TAG="${{ github.ref_name }}"
-            TAGS="${TAGS},${{ vars.DOCKERHUB_USERNAME }}/${{ vars.DOCKER_PROJETO }}-${{ env.DOCKER_TAG }}:${VERSION_TAG}"
+            TAGS="${TAGS},${{ vars.DOCKERHUB_USERNAME }}/${{ vars.DOCKER_PROJETO }}-${{ env.DOCKER_TAG }}:${{ env.RELEASE }}"
           fi
           
           echo "TAGS=${TAGS}" >> $GITHUB_ENV
