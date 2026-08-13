@@ -54,7 +54,7 @@ jobs:
           elif [[ "${GITHUB_REF}" == "refs/heads/development" ]]; then
             echo "ENV_NAME=development" >> "$GITHUB_ENV"
             echo "DOCKER_TAG=dev" >> "$GITHUB_ENV"
-            echo "DOCKER_LATEST=false" >> "$GITHUB_ENV"
+            echo "DOCKER_LATEST=true" >> "$GITHUB_ENV"
 
           elif [[ "${GITHUB_REF}" == "refs/heads/hml" ]]; then
             echo "ENV_NAME=hml" >> "$GITHUB_ENV"
